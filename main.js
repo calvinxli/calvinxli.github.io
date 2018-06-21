@@ -41,7 +41,7 @@ module.exports = ".fa {\r\n    font-size: 3vh;\r\n    color: white;\r\n    paddi
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card>\n    <mat-card-header>\n        <mat-card-title>\n            <span class=\"about-name\">{{about.name}}</span>\n        </mat-card-title>\n        <mat-card-subtitle class=\"job\">\n            <mat-icon>work</mat-icon> {{about.job}}\n        </mat-card-subtitle>\n        <mat-card-subtitle class=\"contact\">\n            <span><mat-icon>email</mat-icon> {{about.email}}</span>\n            <span><mat-icon>location_on</mat-icon> {{about.location}}</span>\n            <span *ngIf=\"about.phoneNumber\">\n                <mat-icon>call</mat-icon> {{about.phoneNumber}}\n            </span>\n        </mat-card-subtitle>\n        <mat-card-subtitle>\n            <span *ngIf=\"about.linkedIn\">\n                <a href=\"{{about.linkedIn}}\">\n                    <i mat-icon-button class=\"fa fa-linkedin\"></i>\n                </a>\n            </span>\n            <span *ngIf=\"about.gitHub\">\n                <a href=\"{{about.gitHub}}\">\n                    <i mat-icon-button class=\"fa fa-github\"></i>\n                </a>\n            </span>\n            <div style=\"padding-top:1vh\">\n                <a mat-raised-button color=\"primary\"\n                    href=\"https://drive.google.com/file/d/0B92Dn0Is3SzlMmx3TU13V09vd1U/view?usp=sharing\">\n                    PDF Resume\n                </a>\n            </div>\n        </mat-card-subtitle>\n    </mat-card-header>\n    <mat-card-content>\n        \n    </mat-card-content>\n</mat-card>\n    "
+module.exports = "<mat-card>\n    <mat-card-header>\n        <mat-card-title>\n            <span class=\"about-name\">{{data.name}}</span>\n        </mat-card-title>\n        <mat-card-subtitle class=\"job\">\n            <mat-icon>work</mat-icon> {{data.job}}\n        </mat-card-subtitle>\n        <mat-card-subtitle class=\"contact\">\n            <span><mat-icon>email</mat-icon> {{data.email}}</span>\n            <span><mat-icon>location_on</mat-icon> {{data.location}}</span>\n            <span *ngIf=\"data.phoneNumber\">\n                <mat-icon>call</mat-icon> {{data.phoneNumber}}\n            </span>\n        </mat-card-subtitle>\n        <mat-card-subtitle>\n            <span *ngIf=\"data.linkedIn\">\n                <a href=\"{{data.linkedIn}}\">\n                    <i mat-icon-button class=\"fa fa-linkedin\"></i>\n                </a>\n            </span>\n            <span *ngIf=\"data.gitHub\">\n                <a href=\"{{data.gitHub}}\">\n                    <i mat-icon-button class=\"fa fa-github\"></i>\n                </a>\n            </span>\n            <div style=\"padding-top:1vh\">\n                <a mat-raised-button color=\"primary\"\n                    href=\"https://drive.google.com/file/d/0B92Dn0Is3SzlMmx3TU13V09vd1U/view?usp=sharing\">\n                    PDF Resume\n                </a>\n            </div>\n        </mat-card-subtitle>\n    </mat-card-header>\n    <mat-card-content>\n        \n    </mat-card-content>\n</mat-card>\n    "
 
 /***/ }),
 
@@ -56,7 +56,7 @@ module.exports = "<mat-card>\n    <mat-card-header>\n        <mat-card-title>\n 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AboutComponent", function() { return AboutComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _api_about__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/about */ "./src/app/api/about.ts");
+/* harmony import */ var _api_DataService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/DataService */ "./src/app/api/DataService.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -69,10 +69,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var AboutComponent = /** @class */ (function () {
-    function AboutComponent() {
-        this.about = _api_about__WEBPACK_IMPORTED_MODULE_1__["about"];
+    function AboutComponent(dataService) {
+        this.dataService = dataService;
     }
     AboutComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.dataService.getAbout().subscribe(function (data) {
+            _this.data = data;
+        }, function (error) { return alert('Error: ' + error.message); });
     };
     AboutComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -80,7 +84,7 @@ var AboutComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./about.component.html */ "./src/app/about/about.component.html"),
             styles: [__webpack_require__(/*! ./about.component.css */ "./src/app/about/about.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_api_DataService__WEBPACK_IMPORTED_MODULE_1__["DataService"]])
     ], AboutComponent);
     return AboutComponent;
 }());
@@ -89,224 +93,57 @@ var AboutComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/api/about.ts":
-/*!******************************!*\
-  !*** ./src/app/api/about.ts ***!
-  \******************************/
-/*! exports provided: about */
+/***/ "./src/app/api/DataService.ts":
+/*!************************************!*\
+  !*** ./src/app/api/DataService.ts ***!
+  \************************************/
+/*! exports provided: DataService */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "about", function() { return about; });
-var about = {
-    name: 'Calvin Li',
-    location: 'Portland, OR',
-    email: 'calvin.xuan.li@gmail.com',
-    job: 'Software Engineer',
-    phoneNumber: null,
-    summary: null,
-    linkedIn: 'https://www.linkedin.com/in/calvinxli/',
-    gitHub: 'https://github.com/calvinxli'
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataService", function() { return DataService; });
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
 
-/***/ }),
-
-/***/ "./src/app/api/education.ts":
-/*!**********************************!*\
-  !*** ./src/app/api/education.ts ***!
-  \**********************************/
-/*! exports provided: education */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "education", function() { return education; });
-var education = [
-    {
-        name: 'Oregon State University',
-        location: 'Corvallis, OR, United States',
-        degree: 'Bachelor of Computer Science',
-        startDate: new Date(2011, 8),
-        endDate: new Date(2016, 2),
-        gpa: 3.81
+var DataService = /** @class */ (function () {
+    function DataService(http) {
+        this.http = http;
     }
-];
+    DataService.prototype.getExperience = function () {
+        return this.http.get('assets/experience.json');
+    };
+    DataService.prototype.getAbout = function () {
+        return this.http.get('assets/about.json');
+    };
+    DataService.prototype.getInterests = function () {
+        return this.http.get('assets/interests.json');
+    };
+    DataService.prototype.getEducation = function () {
+        return this.http.get('assets/education.json');
+    };
+    DataService.prototype.getSkillSets = function () {
+        return this.http.get('assets/skill-sets.json');
+    };
+    DataService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+            providedIn: 'root',
+        }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClient"]])
+    ], DataService);
+    return DataService;
+}());
 
-
-/***/ }),
-
-/***/ "./src/app/api/experiences.ts":
-/*!************************************!*\
-  !*** ./src/app/api/experiences.ts ***!
-  \************************************/
-/*! exports provided: experiences */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "experiences", function() { return experiences; });
-var experiences = [
-    {
-        company: '3Sharp',
-        location: 'Redmond, WA',
-        role: 'Software Engineer',
-        startDate: new Date(2018, 1),
-        endDate: null,
-        highlights: [
-            'Contribute towards release requirements of the 3Sharp Demo Platform.',
-            'Extend the Demo Platform Services by adding the capability of provisioning and managing virtual machines using Azure Resource Manager templates.',
-            'Design and implement a system which allows a cloud-hosted service to control and monitor active virtual machines using Azure Service Bus.',
-            'Create REST endpoints using Web API.',
-            'Create and update Angular components for the Microsoft Demos Portal.'
-        ],
-        technologies: 'C#, .NET, .NET Core, Web API, Azure, Cosmos DB, Service Bus, Angular'
-    },
-    {
-        company: 'Grass Valley',
-        location: 'Hillsboro, OR',
-        role: 'Software Engineer',
-        startDate: new Date(2016, 3),
-        endDate: new Date(2016, 0),
-        highlights: [
-            'Contribute towards release requirements of the GV STRATUS software.',
-            'Implement new features for GV STRATUS using C#, .NET, WCF RESTful services, WPF and SQL Server.',
-            'Debug, design and implement new features for existing WPF applications.',
-            'Create an IL weaver that can automatically modify and add data members to data contracts.',
-            'Create an automation framework using Selenium for testing the GV STRATUS Web Client. Reduced manual testing effort and made it easier to create/maintain tests.',
-            'Create unit tests using NUnit, Unity, and FakeItEasy.'
-        ],
-        technologies: 'C#, .NET, WCF, WPF, SQL Server, Fody, Selenium, FlaUI, NUnit, Unity, FakeItEasy'
-    },
-    {
-        company: 'Intel',
-        location: 'Hillsboro, OR',
-        role: 'Software Engineer Intern (MECOP)',
-        startDate: new Date(2015, 5),
-        endDate: new Date(2015, 11),
-        highlights: [
-            'Implement a feature that uses UART (universal asynchronous receiver/transmitter) to send and receive debug information from a wireless charging board. Save firmware developer hours by giving hardware validation engineers more control over the firmware.',
-            'Automate the process of sending/receiving data through UART using python.',
-            'Debug and enhance multi-threaded WPF applications.'
-        ],
-        technologies: 'C#, .NET, WPF, Python, C'
-    },
-    {
-        company: 'ON Semiconductor',
-        location: 'Gresham, OR',
-        role: 'Software Development Engineer Intern (MECOP)',
-        startDate: new Date(2014, 2),
-        endDate: new Date(2014, 8),
-        highlights: [
-            'Create web forms using ASP.NET and C#. Automate the process of submitting wafer defect reports; improve the effectiveness and efficiency of the quality control process. Convert web applications from PHP to ASP.NET.',
-            'Eliminate the need of a third party software. Create a C# console app that parses wafer data and uploads the resulting files to a server via FTP where the data will be used to analyze silicon wafer defects.'
-        ],
-        technologies: 'C#, .NET, ASP.NET, JavaScript, JQuery, PHP'
-    }
-];
-
-
-/***/ }),
-
-/***/ "./src/app/api/interests.ts":
-/*!**********************************!*\
-  !*** ./src/app/api/interests.ts ***!
-  \**********************************/
-/*! exports provided: interests */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "interests", function() { return interests; });
-var interests = [
-    {
-        category: 'Technologies',
-        descriptions: [
-            'GraphQL',
-            'AWS',
-            'Azure',
-            'Apache Kafka'
-        ]
-    },
-    {
-        category: 'General',
-        descriptions: [
-            'Back-end development',
-            'Distributed systems',
-            'Full-stack development',
-            'Machine learning',
-            'Artificial intelligence'
-        ]
-    },
-];
-
-
-/***/ }),
-
-/***/ "./src/app/api/skill-sets.ts":
-/*!***********************************!*\
-  !*** ./src/app/api/skill-sets.ts ***!
-  \***********************************/
-/*! exports provided: skillSets */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "skillSets", function() { return skillSets; });
-var skillSets = [
-    {
-        category: 'Front End',
-        skills: [
-            { skill: 'JavaScript', experience: null },
-            { skill: 'TypeScript', experience: null },
-            { skill: 'HTML', experience: null },
-            { skill: 'CSS', experience: null },
-            { skill: 'WPF', experience: null },
-            { skill: 'Angular', experience: null }
-        ]
-    },
-    {
-        category: 'Back End',
-        skills: [
-            { skill: 'C#', experience: null },
-            { skill: '.NET', experience: null },
-            { skill: '.NET Core', experience: null },
-            { skill: 'SQL', experience: null },
-            { skill: 'Web API', experience: null },
-            { skill: 'WCF', experience: null },
-            { skill: 'GraphQL', experience: null },
-            { skill: 'Node.js', experience: null }
-        ]
-    },
-    {
-        category: 'Testing',
-        skills: [
-            { skill: 'NUnit', experience: null },
-            { skill: 'FakeItEasy', experience: null },
-            { skill: 'Moq', experience: null },
-            { skill: 'Selenium', experience: null },
-            { skill: 'FlaUI', experience: null }
-        ]
-    },
-    {
-        category: 'Tools',
-        skills: [
-            { skill: 'Visual Studio', experience: null },
-            { skill: 'SQL Server', experience: null },
-            { skill: 'Fiddler', experience: null },
-            { skill: 'Postman', experience: null }
-        ]
-    },
-    {
-        category: 'Other',
-        skills: [
-            { skill: 'Unity', experience: null },
-            { skill: 'Fody', experience: null },
-            { skill: 'Mono.Cecil', experience: null }
-        ]
-    },
-];
 
 
 /***/ }),
@@ -382,13 +219,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _experience_experience_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./experience/experience.component */ "./src/app/experience/experience.component.ts");
-/* harmony import */ var _education_education_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./education/education.component */ "./src/app/education/education.component.ts");
-/* harmony import */ var _interests_interests_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./interests/interests.component */ "./src/app/interests/interests.component.ts");
-/* harmony import */ var _projects_projects_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./projects/projects.component */ "./src/app/projects/projects.component.ts");
-/* harmony import */ var _knowledge_skills_knowledge_skills_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./knowledge-skills/knowledge-skills.component */ "./src/app/knowledge-skills/knowledge-skills.component.ts");
-/* harmony import */ var _about_about_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./about/about.component */ "./src/app/about/about.component.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _experience_experience_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./experience/experience.component */ "./src/app/experience/experience.component.ts");
+/* harmony import */ var _education_education_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./education/education.component */ "./src/app/education/education.component.ts");
+/* harmony import */ var _interests_interests_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./interests/interests.component */ "./src/app/interests/interests.component.ts");
+/* harmony import */ var _projects_projects_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./projects/projects.component */ "./src/app/projects/projects.component.ts");
+/* harmony import */ var _knowledge_skills_knowledge_skills_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./knowledge-skills/knowledge-skills.component */ "./src/app/knowledge-skills/knowledge-skills.component.ts");
+/* harmony import */ var _about_about_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./about/about.component */ "./src/app/about/about.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -407,22 +245,24 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
             declarations: [
-                _app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"],
-                _experience_experience_component__WEBPACK_IMPORTED_MODULE_5__["ExperienceComponent"],
-                _education_education_component__WEBPACK_IMPORTED_MODULE_6__["EducationComponent"],
-                _interests_interests_component__WEBPACK_IMPORTED_MODULE_7__["InterestsComponent"],
-                _projects_projects_component__WEBPACK_IMPORTED_MODULE_8__["ProjectsComponent"],
-                _knowledge_skills_knowledge_skills_component__WEBPACK_IMPORTED_MODULE_9__["KnowledgeSkillsComponent"],
-                _about_about_component__WEBPACK_IMPORTED_MODULE_10__["AboutComponent"]
+                _app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"],
+                _experience_experience_component__WEBPACK_IMPORTED_MODULE_6__["ExperienceComponent"],
+                _education_education_component__WEBPACK_IMPORTED_MODULE_7__["EducationComponent"],
+                _interests_interests_component__WEBPACK_IMPORTED_MODULE_8__["InterestsComponent"],
+                _projects_projects_component__WEBPACK_IMPORTED_MODULE_9__["ProjectsComponent"],
+                _knowledge_skills_knowledge_skills_component__WEBPACK_IMPORTED_MODULE_10__["KnowledgeSkillsComponent"],
+                _about_about_component__WEBPACK_IMPORTED_MODULE_11__["AboutComponent"]
             ],
             imports: [
                 // AppRoutingModule,
+                _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClientModule"],
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatCardModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatChipsModule"],
@@ -433,7 +273,7 @@ var AppModule = /** @class */ (function () {
                 _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatButtonModule"]
             ],
             providers: [],
-            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]
+            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]]
         })
     ], AppModule);
     return AppModule;
@@ -461,7 +301,7 @@ module.exports = "mat-card-content {\r\n    padding-left: 1vh;\r\n}"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card *ngFor=\"let school of education\">\n    <mat-card-header>\n        <mat-card-title>\n            <mat-icon class=\"card-title\">school</mat-icon>\n            <h1 class=\"card-title\">{{school.name}}</h1>\n        </mat-card-title>\n        <mat-card-subtitle>\n            <mat-icon>location_on</mat-icon>\n            {{school.location}}\n            <mat-icon>date_range</mat-icon>\n            {{school.startDate | date:'y MMM'}} - {{school.endDate ? (school.endDate | date:'y MMM') : 'Present'}}\n        </mat-card-subtitle>\n    </mat-card-header>\n    <mat-card-content >\n        <p>{{school.degree}}</p>\n        <p>{{school.gpa}} GPA</p>\n    </mat-card-content>\n</mat-card>\n"
+module.exports = "<mat-card *ngFor=\"let school of data\">\n    <mat-card-header>\n        <mat-card-title>\n            <mat-icon class=\"card-title\">school</mat-icon>\n            <h1 class=\"card-title\">{{school.name}}</h1>\n        </mat-card-title>\n        <mat-card-subtitle>\n            <mat-icon>location_on</mat-icon>\n            {{school.location}}\n            <mat-icon>date_range</mat-icon>\n            {{school.startDate}} - {{school.endDate || 'Present'}}\n        </mat-card-subtitle>\n    </mat-card-header>\n    <mat-card-content >\n        <p>{{school.degree}}</p>\n        <p>{{school.gpa}} GPA</p>\n    </mat-card-content>\n</mat-card>\n"
 
 /***/ }),
 
@@ -476,7 +316,7 @@ module.exports = "<mat-card *ngFor=\"let school of education\">\n    <mat-card-h
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EducationComponent", function() { return EducationComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _api_education__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/education */ "./src/app/api/education.ts");
+/* harmony import */ var _api_DataService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/DataService */ "./src/app/api/DataService.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -489,10 +329,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var EducationComponent = /** @class */ (function () {
-    function EducationComponent() {
-        this.education = _api_education__WEBPACK_IMPORTED_MODULE_1__["education"];
+    function EducationComponent(dataService) {
+        this.dataService = dataService;
     }
     EducationComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.dataService.getEducation().subscribe(function (data) {
+            _this.data = data;
+        }, function (error) { return alert('Error: ' + error.message); });
     };
     EducationComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -500,7 +344,7 @@ var EducationComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./education.component.html */ "./src/app/education/education.component.html"),
             styles: [__webpack_require__(/*! ./education.component.css */ "./src/app/education/education.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_api_DataService__WEBPACK_IMPORTED_MODULE_1__["DataService"]])
     ], EducationComponent);
     return EducationComponent;
 }());
@@ -527,7 +371,7 @@ module.exports = "mat-card-footer {\r\n    padding-left: 4vh;\r\n    padding-rig
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card *ngFor=\"let experience of experiences\">\r\n    <mat-card-header>\r\n        <mat-card-title>\r\n            <mat-icon class=\"card-title\">business</mat-icon>\r\n            <h1 class=\"card-title\">{{experience.company}}</h1>\r\n        </mat-card-title>\r\n        <mat-card-subtitle>\r\n            <mat-icon>person</mat-icon> {{experience.role}}\r\n            <mat-icon>place</mat-icon> {{experience.location}}\r\n            <mat-icon>date_range</mat-icon> {{experience.startDate | date:'y MMM'}} - {{experience.endDate ? (experience.endDate | date:'y MMM') : 'Present'}}\r\n        </mat-card-subtitle>\r\n    </mat-card-header>\r\n    <mat-card-content>\r\n        <ul>\r\n            <li *ngFor=\"let highlight of experience.highlights\">\r\n                {{highlight}}\r\n            </li>\r\n        </ul>\r\n    </mat-card-content>\r\n    <mat-card-footer>\r\n        <mat-chip-list>\r\n            <mat-chip *ngFor=\"let tech of experience.technologies.split(',')\" selected=\"true\">\r\n                {{tech.trim()}}\r\n            </mat-chip>\r\n        </mat-chip-list>\r\n    </mat-card-footer>\r\n</mat-card>"
+module.exports = "<mat-card *ngFor=\"let experience of data\">\r\n    <mat-card-header>\r\n        <mat-card-title>\r\n            <mat-icon class=\"card-title\">business</mat-icon>\r\n            <h1 class=\"card-title\">{{experience.company}}</h1>\r\n        </mat-card-title>\r\n        <mat-card-subtitle>\r\n            <mat-icon>person</mat-icon> {{experience.role}}\r\n            <mat-icon>place</mat-icon> {{experience.location}}\r\n            <mat-icon>date_range</mat-icon> {{experience.startDate}} - {{experience.endDate || 'Present'}}\r\n        </mat-card-subtitle>\r\n    </mat-card-header>\r\n    <mat-card-content>\r\n        <ul>\r\n            <li *ngFor=\"let highlight of experience.highlights\">\r\n                {{highlight}}\r\n            </li>\r\n        </ul>\r\n    </mat-card-content>\r\n    <mat-card-footer>\r\n        <mat-chip-list>\r\n            <mat-chip *ngFor=\"let tech of experience.technologies.split(',')\" selected=\"true\">\r\n                {{tech.trim()}}\r\n            </mat-chip>\r\n        </mat-chip-list>\r\n    </mat-card-footer>\r\n</mat-card>"
 
 /***/ }),
 
@@ -542,7 +386,7 @@ module.exports = "<mat-card *ngFor=\"let experience of experiences\">\r\n    <ma
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ExperienceComponent", function() { return ExperienceComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _api_experiences__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/experiences */ "./src/app/api/experiences.ts");
+/* harmony import */ var _api_DataService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/DataService */ "./src/app/api/DataService.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -555,10 +399,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var ExperienceComponent = /** @class */ (function () {
-    function ExperienceComponent() {
-        this.experiences = _api_experiences__WEBPACK_IMPORTED_MODULE_1__["experiences"];
+    function ExperienceComponent(dataService) {
+        this.dataService = dataService;
     }
     ExperienceComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.dataService.getExperience().subscribe(function (data) {
+            _this.data = data;
+        }, function (error) { return alert('Error: ' + error.message); });
     };
     ExperienceComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -566,7 +414,7 @@ var ExperienceComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./experience.component.html */ "./src/app/experience/experience.component.html"),
             styles: [__webpack_require__(/*! ./experience.component.css */ "./src/app/experience/experience.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_api_DataService__WEBPACK_IMPORTED_MODULE_1__["DataService"]])
     ], ExperienceComponent);
     return ExperienceComponent;
 }());
@@ -593,7 +441,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card *ngFor=\"let interest of interests\">\n    <mat-card-title>\n        <h1>{{interest.category}}</h1>\n    </mat-card-title>\n    <mat-card-content>\n            <ul>\n                <li *ngFor=\"let description of interest.descriptions\">{{description}}</li>\n            </ul>\n    </mat-card-content>\n</mat-card>"
+module.exports = "<mat-card *ngFor=\"let interest of data\">\n    <mat-card-title>\n        <h1>{{interest.category}}</h1>\n    </mat-card-title>\n    <mat-card-content>\n            <ul>\n                <li *ngFor=\"let description of interest.descriptions\">{{description}}</li>\n            </ul>\n    </mat-card-content>\n</mat-card>"
 
 /***/ }),
 
@@ -608,7 +456,7 @@ module.exports = "<mat-card *ngFor=\"let interest of interests\">\n    <mat-card
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InterestsComponent", function() { return InterestsComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _api_interests__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/interests */ "./src/app/api/interests.ts");
+/* harmony import */ var _api_DataService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/DataService */ "./src/app/api/DataService.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -621,10 +469,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var InterestsComponent = /** @class */ (function () {
-    function InterestsComponent() {
-        this.interests = _api_interests__WEBPACK_IMPORTED_MODULE_1__["interests"];
+    function InterestsComponent(dataService) {
+        this.dataService = dataService;
     }
     InterestsComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.dataService.getInterests().subscribe(function (data) {
+            _this.data = data;
+        }, function (error) { return alert('Error: ' + error.message); });
     };
     InterestsComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -632,7 +484,7 @@ var InterestsComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./interests.component.html */ "./src/app/interests/interests.component.html"),
             styles: [__webpack_require__(/*! ./interests.component.css */ "./src/app/interests/interests.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_api_DataService__WEBPACK_IMPORTED_MODULE_1__["DataService"]])
     ], InterestsComponent);
     return InterestsComponent;
 }());
@@ -659,7 +511,7 @@ module.exports = "mat-chip {\r\n    max-width: 10vh;\r\n}\r\n\r\n.card-container
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"card-container\">\n    <mat-card *ngFor=\"let skillSet of skillSets\">\n        <mat-card-header>\n            <mat-card-title>\n                <h2>{{skillSet.category}}</h2>\n            </mat-card-title>\n        </mat-card-header>\n        <mat-card-content>\n            <mat-chip-list class=\"mat-chip-list\">\n                <mat-chip *ngFor=\"let skill of skillSet.skills\" selected=\"true\">\n                    {{skill.skill}} <span class=\"spacer\"></span> {{skill.experience}}\n                </mat-chip>\n            </mat-chip-list>\n        </mat-card-content> \n    </mat-card>\n</div>"
+module.exports = "<div class=\"card-container\">\n    <mat-card *ngFor=\"let skillSet of data\">\n        <mat-card-header>\n            <mat-card-title>\n                <h2>{{skillSet.category}}</h2>\n            </mat-card-title>\n        </mat-card-header>\n        <mat-card-content>\n            <mat-chip-list class=\"mat-chip-list\">\n                <mat-chip *ngFor=\"let skill of skillSet.skills\" selected=\"true\">\n                    {{skill.skill}} <span class=\"spacer\"></span> {{skill.competence}}\n                </mat-chip>\n            </mat-chip-list>\n        </mat-card-content> \n    </mat-card>\n</div>"
 
 /***/ }),
 
@@ -673,8 +525,8 @@ module.exports = "<div class=\"card-container\">\n    <mat-card *ngFor=\"let ski
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "KnowledgeSkillsComponent", function() { return KnowledgeSkillsComponent; });
-/* harmony import */ var _api_skill_sets__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/skill-sets */ "./src/app/api/skill-sets.ts");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _api_DataService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/DataService */ "./src/app/api/DataService.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -687,18 +539,22 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var KnowledgeSkillsComponent = /** @class */ (function () {
-    function KnowledgeSkillsComponent() {
-        this.skillSets = _api_skill_sets__WEBPACK_IMPORTED_MODULE_0__["skillSets"];
+    function KnowledgeSkillsComponent(dataService) {
+        this.dataService = dataService;
     }
     KnowledgeSkillsComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.dataService.getSkillSets().subscribe(function (data) {
+            _this.data = data;
+        }, function (error) { return alert('Error: ' + error.message); });
     };
     KnowledgeSkillsComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-knowledge-skills',
             template: __webpack_require__(/*! ./knowledge-skills.component.html */ "./src/app/knowledge-skills/knowledge-skills.component.html"),
             styles: [__webpack_require__(/*! ./knowledge-skills.component.css */ "./src/app/knowledge-skills/knowledge-skills.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_api_DataService__WEBPACK_IMPORTED_MODULE_1__["DataService"]])
     ], KnowledgeSkillsComponent);
     return KnowledgeSkillsComponent;
 }());
